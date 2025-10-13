@@ -16,8 +16,13 @@ int	main(int argc, char **argv, char **envp)
 {
 	int	status;
 
-	(void)argc;
-	(void)argv;
+	if (argc > 1)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(argv[1], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		return (127);
+	}
 	status = shell_loop(envp);
 	return (status);
 }

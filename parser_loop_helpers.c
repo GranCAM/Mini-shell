@@ -50,12 +50,12 @@ int	process_token_and_append(t_parse_ctx *c, int *argc, char ***argv,
 		return (1);
 	if (ctx.processed[0] == '\0' && !*c->current_cmd && *argc == 0)
 	{
-		if (ft_strncmp(ctx.token, "\"\"", 3) != 0
-			&& ft_strncmp(ctx.token, "''", 3) != 0)
-		{
-			free(ctx.processed);
+		/* Empty string after quote removal becomes empty command */
+		/* This will trigger "command not found" during execution */
+		free(ctx.processed);
+		ctx.processed = ft_strdup("");
+		if (!ctx.processed)
 			return (1);
-		}
 	}
 	append_or_start_cmd_ctx(c, argc, argv, ctx.processed);
 	return (1);
