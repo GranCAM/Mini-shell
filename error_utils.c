@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigonza <guigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carbon-m <carbon-m@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 11:05:00 by Guille            #+#    #+#             */
-/*   Updated: 2025/10/08 20:06:27 by guigonza         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:39:21 by carbon-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static int	alloc_pipes_array(t_exec_ctx *s)
+int	alloc_pipes_array(t_exec_ctx *s)
 {
 	int	i;
 
@@ -31,7 +31,7 @@ static int	alloc_pipes_array(t_exec_ctx *s)
 	return (0);
 }
 
-static int	alloc_pids_array(t_exec_ctx *s)
+int	alloc_pids_array(t_exec_ctx *s)
 {
 	int	i;
 
@@ -83,36 +83,4 @@ void	ms_syntax_error(const char *tok)
 		ft_putstr_fd((char *)tok, 2);
 		ft_putstr_fd("'\n", 2);
 	}
-}
-
-int	count_cmds(t_cmd *cmd)
-{
-	int	count;
-
-	count = 0;
-	while (cmd)
-	{
-		count++;
-		cmd = cmd->next;
-	}
-	return (count);
-}
-
-int	alloc_exec_arrays(t_exec_ctx *s)
-{
-	if (alloc_pipes_array(s) < 0)
-		return (-1);
-	if (alloc_pids_array(s) < 0)
-	{
-		free(s->pfd);
-		return (-1);
-	}
-	s->cmd_arr = malloc(sizeof(t_cmd *) * s->n);
-	if (!s->cmd_arr)
-	{
-		free(s->pfd);
-		free(s->pids);
-		return (ms_perror("malloc"), -1);
-	}
-	return (0);
 }

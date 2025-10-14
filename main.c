@@ -91,4 +91,3 @@ void	close_redir_fds_parent(t_cmd *cmd)
 		cmd->redir.heredoc_fd = -1;
 	}
 }
-

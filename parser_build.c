@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_build.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigonza <guigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Guille <Guille@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:20:00 by Guille            #+#    #+#             */
-/*   Updated: 2025/10/08 19:17:19 by guigonza         ###   ########.fr       */
+/*   Updated: 2025/10/14 12:52:05 by Guille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ t_cmd	*parse_build(char *input, char **envp, int last_status)
 	c.last_status = last_status;
 	if (!parse_main_loop(&c, &tmp[0], &argv, envp))
 	{
-		/* Don't try to free argv - may be corrupted */
 		return (NULL);
 	}
 	head = finalize_after_loop(&c, tmp[0], argv);

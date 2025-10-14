@@ -6,7 +6,7 @@
 /*   By: carbon-m <carbon-m@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 12:50:40 by guigonza          #+#    #+#             */
-/*   Updated: 2025/10/08 20:46:26 by carbon-m         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:30:29 by carbon-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,13 @@ typedef struct s_parse_ctx
 	int					*i;
 	t_cmd				**cmds;
 	int					last_status;
+
+	/* temporales para parse_redir */
+	char				redir_type;
+	int					append;
+	int					is_heredoc;
+	int					no_expand_heredoc;
+	char				*filename_noq;
 }						t_parse_ctx;
 
 /* Token processing context */
@@ -322,6 +329,23 @@ void					apply_out_redirs(t_cmd *cmd);
 void					apply_in_redirs(t_cmd *cmd, t_shell *shell);
 void					free_split(char **p);
 int						should_print_bpipe(t_exec_ctx *s, int idx);
+int						hd_create_and_fill(const char *delim, int no_expand,
+							t_shell *shell, int pipefd[2]);
+int						hd_process_list(t_cmd *cmd, t_shell *shell,
+							int *assigned_fd);
+int						hd_fail_cleanup(int *assigned_fd, int new_rfd,
+							t_cmd *cmd);
+int						hd_handle_child_status(int status, int rfd);
+int						hd_parent_wait(pid_t pid, int pipefd[2]);
+int						hd_update_assigned(int *assigned_fd, int rfd,
+							int is_last);
+void					free_cmd_node(t_cmd *cmd);
+void					close_redir_fds(t_redir *r);
+void					free_heredocs(t_hdoc *h);
+int						is_valid_cmd_ptr(t_cmd *cmd);
+void					free_argv(char **argv);
+int						alloc_pipes_array(t_exec_ctx *s);
+int						alloc_pids_array(t_exec_ctx *s);
 
 /* noop: mantenido por compatibilidad de includes */
 

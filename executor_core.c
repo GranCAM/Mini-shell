@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_core.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigonza <guigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Guille <Guille@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 13:25:00 by Guille            #+#    #+#             */
-/*   Updated: 2025/10/08 20:01:39 by guigonza         ###   ########.fr       */
+/*   Updated: 2025/10/14 12:51:53 by Guille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ static int	wait_and_finalize(t_exec_ctx *s, t_shell *shell)
 		waitpid(s->pids[s->n - 1], &s->last_status, 0);
 	if (WIFSIGNALED(s->last_status) && WTERMSIG(s->last_status) == SIGINT)
 	{
-		/* No need to write anything - ECHOCTL handles ^C display */
 		sigint_detected = 1;
 	}
 	wait_others(s);

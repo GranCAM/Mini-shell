@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir_utils_parse.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigonza <guigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Guille <Guille@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 23:08:00 by Guille            #+#    #+#             */
-/*   Updated: 2025/10/08 18:04:00 by guigonza         ###   ########.fr       */
+/*   Updated: 2025/10/14 12:59:09 by Guille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,8 @@ char	classify_redir_and_advance(t_parse_ctx *c, int *append, int *is_heredoc)
 	{
 		*is_heredoc = 1;
 		(*c->i)++;
-		/* Check for invalid <<< sequence */
 		if (c->input[*c->i + 1] == '<')
-			return ('\0');  /* Signal invalid sequence */
+			return ('\0');
 	}
 	(*c->i)++;
 	return (redir_type);

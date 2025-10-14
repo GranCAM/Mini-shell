@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigonza <guigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Guille <Guille@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 22:30:00 by guigonza          #+#    #+#             */
-/*   Updated: 2025/10/08 19:29:25 by guigonza         ###   ########.fr       */
+/*   Updated: 2025/10/14 12:55:23 by Guille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	handle_sigint_primary(t_shell *shell, t_loop_ctx *c)
 {
 	if (g_signal == SIGINT)
 	{
-		shell->last_status = 130;  /* SIGINT exit status */
+		shell->last_status = 130;
 		g_signal = 0;
 		free(c->input);
 		c->input = NULL;

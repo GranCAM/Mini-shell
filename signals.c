@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carbon-m <carbon-m@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: Guille <Guille@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 21:44:02 by guigonza          #+#    #+#             */
-/*   Updated: 2025/10/13 18:47:44 by carbon-m         ###   ########.fr       */
+/*   Updated: 2025/10/14 12:58:02 by Guille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <signal.h>
 #include <unistd.h>
 
-int		g_signal = 0;
+int			g_signal = 0;
 
 void	sig_handler(int signo)
 {
@@ -101,19 +101,4 @@ void	wait_others(t_exec_ctx *s)
 		}
 		s->k++;
 	}
-}
-
-int	wait_and_finalize(t_exec_ctx *s, t_shell *shell)
-{
-	if (s->pids[s->n - 1] > 0)
-		waitpid(s->pids[s->n - 1], &s->last_status, 0);
-	wait_others(s);
-	sigaction(SIGINT, &s->old_int, NULL);
-	if (WIFEXITED(s->last_status))
-		shell->last_status = WEXITSTATUS(s->last_status);
-	else if (WIFSIGNALED(s->last_status))
-		shell->last_status = 128 + WTERMSIG(s->last_status);
-	else
-		shell->last_status = 1;
-	return (shell->last_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_loop_helpers.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigonza <guigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Guille <Guille@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 17:06:00 by Guille            #+#    #+#             */
-/*   Updated: 2025/10/08 19:25:59 by guigonza         ###   ########.fr       */
+/*   Updated: 2025/10/14 12:52:29 by Guille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	skip_spaces(t_parse_ctx *c)
 
 void	cleanup_parse_failure(char ***argv, t_cmd **cmds)
 {
-	/* Simply set pointers to NULL to avoid crashes */
-	/* Memory leak is better than segfault */
 	if (argv)
 		*argv = NULL;
 	if (cmds)
@@ -50,8 +48,6 @@ int	process_token_and_append(t_parse_ctx *c, int *argc, char ***argv,
 		return (1);
 	if (ctx.processed[0] == '\0' && !*c->current_cmd && *argc == 0)
 	{
-		/* Empty string after quote removal becomes empty command */
-		/* This will trigger "command not found" during execution */
 		free(ctx.processed);
 		ctx.processed = ft_strdup("");
 		if (!ctx.processed)
@@ -74,8 +70,7 @@ int	handle_pipe_or_redir(t_parse_ctx *c, int *argc, char ***argv,
 	}
 	if (c->input[*c->i] == '<' || c->input[*c->i] == '>')
 	{
-		/* Check for problematic sequences like <<< */
-		if (c->input[*c->i] == '<' && c->input[*c->i + 1] == '<' 
+		if (c->input[*c->i] == '<' && c->input[*c->i + 1] == '<'
 			&& c->input[*c->i + 2] == '<')
 		{
 			ms_syntax_error("<");

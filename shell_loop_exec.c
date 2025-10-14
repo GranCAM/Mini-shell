@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loop_exec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigonza <guigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Guille <Guille@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 14:20:30 by guigonza          #+#    #+#             */
-/*   Updated: 2025/10/08 19:27:58 by guigonza         ###   ########.fr       */
+/*   Updated: 2025/10/14 13:30:01 by Guille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,8 @@ void	process_line(t_shell *shell, t_loop_ctx *c)
 		return ;
 	}
 	exec_after_parsing(shell, c);
-	/* Ensure clean line after command interruption */
 	if (shell->last_status == 130)
-	{
-		printf("\n");
-		fflush(stdout);
-	}
+		write(2, "\n", 1);
 	free_cmds(shell->parser.cmds);
 	shell->parser.cmds = NULL;
 }

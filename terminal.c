@@ -70,19 +70,3 @@ void	restore_terminal(void)
 		return ;
 	tcsetattr(STDIN_FILENO, TCSANOW, &t);
 }
-
-void	close_extra_fds(void)
-{
-	long	max_fd;
-	int		fd;
-
-	max_fd = sysconf(_SC_OPEN_MAX);
-	if (max_fd < 0)
-		max_fd = 1024;
-	fd = 3;
-	while (fd < max_fd)
-	{
-		close(fd);
-		fd++;
-	}
-}

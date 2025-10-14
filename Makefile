@@ -61,6 +61,7 @@ SRC = \
 	shell_loop.c \
 	shell_loop_exec.c \
 	signals.c \
+	utils.c \
 	terminal.c
 
 

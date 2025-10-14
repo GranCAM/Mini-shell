@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigonza <guigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Guille <Guille@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 17:40:00 by Guille            #+#    #+#             */
-/*   Updated: 2025/10/08 18:13:43 by guigonza         ###   ########.fr       */
+/*   Updated: 2025/10/14 13:21:35 by Guille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,82 @@
 
 void	parse_redir(t_parse_ctx *c, int *argc, char ***argv, int *parse_error)
 {
-	char	redir_type;
-	int		append;
-	int		is_heredoc;
-	int		no_expand_heredoc;
-	char	*filename_noq;
-
-	redir_type = classify_redir_and_advance(c, &append, &is_heredoc);
-	if (redir_type == '\0')
+	c->redir_type = classify_redir_and_advance(c, &c->append, &c->is_heredoc);
+	if (c->redir_type == '\0')
 	{
 		ms_syntax_error("<");
 		*parse_error = 1;
 		return ;
 	}
-	filename_noq = get_filename_noq(c, is_heredoc, &no_expand_heredoc,
+	c->filename_noq = get_filename_noq(c, c->is_heredoc, &c->no_expand_heredoc,
 			parse_error);
-	if (!filename_noq)
+	if (!c->filename_noq)
 		return ;
 	attach_new_cmd_if_needed(c, argc, argv);
 	if ((*c->current_cmd)->skip_execution)
 	{
-		free(filename_noq);
+		free(c->filename_noq);
+		c->filename_noq = NULL;
 		return ;
 	}
-	if (redir_type == '>')
-		redir_output(*c->current_cmd, filename_noq, append);
+	if (c->redir_type == '>')
+		redir_output(*c->current_cmd, c->filename_noq, c->append);
 	else
-		redir_input_or_heredoc(*c->current_cmd, filename_noq, is_heredoc,
-			no_expand_heredoc);
-	free(filename_noq);
+		redir_input_or_heredoc(*c->current_cmd, c->filename_noq, c->is_heredoc,
+			c->no_expand_heredoc);
+	free(c->filename_noq);
+	c->filename_noq = NULL;
+}
+
+int	count_cmds(t_cmd *cmd)
+{
+	int	count;
+
+	count = 0;
+	while (cmd)
+	{
+		count++;
+		cmd = cmd->next;
+	}
+	return (count);
+}
+
+int	hd_parent_wait(pid_t pid, int pipefd[2])
+{
+	struct sigaction	ign;
+	struct sigaction	old_int;
+	int					status;
+
+	ign.sa_handler = SIG_IGN;
+	sigemptyset(&ign.sa_mask);
+	ign.sa_flags = 0;
+	sigaction(SIGINT, &ign, &old_int);
+	close(pipefd[1]);
+	if (waitpid(pid, &status, 0) < 0)
+	{
+		ms_perror("waitpid");
+		sigaction(SIGINT, &old_int, NULL);
+		close(pipefd[0]);
+		return (0);
+	}
+	sigaction(SIGINT, &old_int, NULL);
+	return (hd_handle_child_status(status, pipefd[0]));
+}
+
+int	hd_handle_child_status(int status, int rfd)
+{
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "\n", 1);
+		g_signal = SIGINT;
+		close(rfd);
+		return (0);
+	}
+	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+	{
+		close(rfd);
+		return (0);
+	}
+	return (1);
 }

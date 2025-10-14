@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigonza <guigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Guille <Guille@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 11:18:00 by Guille            #+#    #+#             */
-/*   Updated: 2025/10/08 18:35:47 by guigonza         ###   ########.fr       */
+/*   Updated: 2025/10/14 12:51:39 by Guille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ static char	*read_input_tty(t_shell *shell)
 		if (g_signal == SIGINT)
 		{
 			g_signal = 0;
-			shell->last_status = 130;  /* Set exit status for SIGINT */
+			shell->last_status = 130;
 			if (!line)
-				continue;
+				continue ;
 		}
-		break;
+		break ;
 	}
 	if (line && *line && !shell->in_heredoc)
 		add_history(line);
@@ -54,7 +54,6 @@ char	*read_input(t_shell *shell)
 
 	if (isatty(STDIN_FILENO))
 	{
-		/* Ensure readline starts on a fresh line after any previous output */
 		rl_on_new_line();
 		result = read_input_tty(shell);
 		return (result);

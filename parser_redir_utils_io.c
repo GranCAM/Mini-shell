@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir_utils_io.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigonza <guigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Guille <Guille@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 23:05:00 by Guille            #+#    #+#             */
-/*   Updated: 2025/10/08 18:16:19 by guigonza         ###   ########.fr       */
+/*   Updated: 2025/10/14 12:54:38 by Guille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	attach_new_cmd_if_needed(t_parse_ctx *c, int *argc, char ***argv)
 		*argc = 0;
 		*argv = (char **)malloc(sizeof(char *) * (MAX_TOKENS + 1));
 		if (!*argv)
-			return ;  /* Handle malloc failure */
+			return ;
 	}
 }
 

@@ -57,7 +57,7 @@ void	preprocess_heredocs(t_cmd *cmds, t_shell *shell)
 	shell->in_heredoc = 1;
 	while (cur)
 	{
-		if (!cur->skip_execution && cur->redir.heredoc_fd == -2 
+		if (!cur->skip_execution && cur->redir.heredoc_fd == -2
 			&& (cur->redir.heredocs || cur->redir.heredoc_delim))
 			handle_heredoc(cur, shell);
 		cur = cur->next;

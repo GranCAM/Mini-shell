@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigonza <guigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Guille <Guille@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:35:00 by Guille            #+#    #+#             */
-/*   Updated: 2025/10/08 14:21:22 by guigonza         ###   ########.fr       */
+/*   Updated: 2025/10/14 13:27:15 by Guille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static void	free_argv(char **argv)
+void	free_argv(char **argv)
 {
 	int	i;
 
@@ -28,17 +28,16 @@ static void	free_argv(char **argv)
 	free(argv);
 }
 
-static int	is_valid_cmd_ptr(t_cmd *cmd)
+int	is_valid_cmd_ptr(t_cmd *cmd)
 {
 	if (!cmd)
 		return (0);
-	/* Basic pointer validation */
 	if (cmd < (t_cmd *)0x1000 || cmd > (t_cmd *)0x7fffffffffff)
 		return (0);
 	return (1);
 }
 
-static void	free_heredocs(t_hdoc *h)
+void	free_heredocs(t_hdoc *h)
 {
 	t_hdoc	*nx;
 	int		safety_counter;
@@ -55,7 +54,7 @@ static void	free_heredocs(t_hdoc *h)
 	}
 }
 
-static void	close_redir_fds(t_redir *r)
+void	close_redir_fds(t_redir *r)
 {
 	if (!r)
 		return ;
@@ -69,7 +68,7 @@ static void	close_redir_fds(t_redir *r)
 		close(r->heredoc_fd);
 }
 
-static void	free_cmd_node(t_cmd *cmd)
+void	free_cmd_node(t_cmd *cmd)
 {
 	if (!cmd || !is_valid_cmd_ptr(cmd))
 		return ;
@@ -81,20 +80,4 @@ static void	free_cmd_node(t_cmd *cmd)
 		free_heredocs(cmd->redir.heredocs);
 	close_redir_fds(&cmd->redir);
 	free(cmd);
-}
-
-void	free_cmds(t_cmd *cmds)
-{
-	t_cmd	*next;
-	int		safety_counter;
-
-	safety_counter = 0;
-	while (cmds && is_valid_cmd_ptr(cmds) && safety_counter < 1000)
-	{
-		next = cmds->next;
-		if (is_valid_cmd_ptr(next) || !next)
-			free_cmd_node(cmds);
-		cmds = next;
-		safety_counter++;
-	}
 }
