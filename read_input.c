@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Guille <Guille@student.42.fr>              +#+  +:+       +#+        */
+/*   By: carbon <carbon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 11:18:00 by Guille            #+#    #+#             */
-/*   Updated: 2025/10/14 12:51:39 by Guille           ###   ########.fr       */
+/*   Updated: 2025/10/14 17:02:10 by carbon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*read_input_tty(t_shell *shell)
 			g_signal = 0;
 			shell->last_status = 130;
 			if (!line)
-				continue ;
+				return (NULL);
 		}
 		break ;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_advanced.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guigonza <guigonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carbon <carbon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 21:15:00 by guigonza          #+#    #+#             */
-/*   Updated: 2025/10/07 21:34:15 by guigonza         ###   ########.fr       */
+/*   Updated: 2025/10/14 16:52:02 by carbon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	builtin_exit(char **argv, int last_status)
 			ms_error2("exit", "too many arguments");
 			return (1);
 		}
-		if (!is_numeric(argv[1]))
+		if (!is_numeric(argv[1]) || ft_strlen(argv[1]) > 20)
 			return (print_non_numeric(argv[1]));
 		code = (unsigned char)ft_atoi(argv[1]);
 	}
