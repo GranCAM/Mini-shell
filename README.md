@@ -203,3 +203,7 @@ Proyecto académico desarrollado como parte del currículum de [42 School](https
 ---
 
 <div align="center">
+
+**⭐ Si te ha sido útil, considera dar una estrella al repositorio ⭐**
+
+</div>

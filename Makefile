@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: carbon-m <carbon-m@student.42madrid.com    +#+  +:+       +#+         #
+#    By: Guille <Guille@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/14 17:19:15 by carbon-m          #+#    #+#              #
-#    Updated: 2025/10/14 17:20:05 by carbon-m         ###   ########.fr        #
+#    Updated: 2026/02/02 01:59:07 by Guille           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,7 +97,7 @@ $(NAME): $(OBJ) $(LIBFT_DIR)/libft.a
 	@echo "$(GREEN)\n ¡Enhorabuena champion, todo compilado!\n"
 
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
